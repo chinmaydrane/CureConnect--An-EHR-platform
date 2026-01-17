@@ -1,0 +1,14 @@
+1.Verify a block by block _id:
+node verifyBlock.js block 692ee3b27620b305f3d6f164
+# Output will show stored vs recomputed hash and print OK or MISMATCH
+
+
+2.Verify a report by report _id:
+node verifyBlock.js report 692ee3b27620b305f3d6f15f
+# This finds report.blockHash, finds the block with that hash, recomputes, and reports match/mismatch
+
+
+3.Verify chain integrity from index 0 (full chain):
+
+node verifyBlock.js chain-from 0
+# Checks hashes and previousHash pointers for all blocks >= 0

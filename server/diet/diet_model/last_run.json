@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-01-17T13:00:10",
+  "targets": [
+    "Recommended_Calories",
+    "Recommended_Protein",
+    "Recommended_Carbs",
+    "Recommended_Fats"
+  ],
+  "results": {
+    "Recommended_Calories": {
+      "best_model": "CatBoost",
+      "best_mae": 100.63813547735397,
+      "best_params": {
+        "model__learning_rate": 0.01,
+        "model__iterations": 900,
+        "model__depth": 6
+      }
+    },
+    "Recommended_Protein": {
+      "best_model": "CatBoost",
+      "best_mae": 7.445145452495592,
+      "best_params": {
+        "model__learning_rate": 0.01,
+        "model__iterations": 600,
+        "model__depth": 6
+      }
+    },
+    "Recommended_Carbs": {
+      "best_model": "CatBoost",
+      "best_mae": 25.5309689225214,
+      "best_params": {
+        "model__learning_rate": 0.01,
+        "model__iterations": 600,
+        "model__depth": 6
+      }
+    },
+    "Recommended_Fats": {
+      "best_model": "CatBoost",
+      "best_mae": 7.659620514033982,
+      "best_params": {
+        "model__learning_rate": 0.01,
+        "model__iterations": 900,
+        "model__depth": 6
+      }
+    }
+  }
+}

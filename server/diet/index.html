@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Diet Recommendation System</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f4f6f9;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 40px;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 24px 28px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      width: 90%;
+      max-width: 1000px;
+    }
+
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 24px;
+    }
+
+    .subtitle {
+      margin: 0 0 24px 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: #fafbff;
+      border-radius: 10px;
+      padding: 16px 18px;
+      border: 1px solid #e0e5f5;
+    }
+
+    .panel h2 {
+      margin: 0 0 12px 0;
+      font-size: 18px;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #c2c6d8;
+      font-size: 13px;
+      outline: none;
+      background: #fff;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 0 2px rgba(25,118,210,0.15);
+    }
+
+    button {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #1976d2;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(25,118,210,0.35);
+      transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.05s ease;
+    }
+
+    button:hover {
+      background: #145aa3;
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 8px rgba(25,118,210,0.35);
+    }
+
+    .status {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    #result-box {
+      min-height: 80px;
+      font-size: 14px;
+    }
+
+    #result-content {
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .result-item {
+      margin-bottom: 4px;
+    }
+
+    .result-label {
+      font-weight: 600;
+    }
+
+    .error-text {
+      color: #c62828;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Diet Recommendation System</h1>
+    <p class="subtitle">Fill your details and get predicted daily requirements.</p>
+
+    <div class="layout">
+      <!-- LEFT: Input panel -->
+      <div class="panel">
+        <h2>Your Details</h2>
+
+        <div class="field">
+          <label for="age">Age (years)</label>
+          <input type="number" id="age" min="1" />
+        </div>
+
+        <div class="field">
+          <label for="height">Height (cm)</label>
+          <input type="number" id="height" min="50" max="250" step="0.1" />
+        </div>
+
+        <div class="field">
+          <label for="weight">Weight (kg)</label>
+          <input type="number" id="weight" min="10" max="300" step="0.1" />
+        </div>
+
+        <div class="field">
+          <label for="gender">Gender</label>
+          <select id="gender">
+            <option value="">Select</option>
+            <option value="Other">Other</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="dietPref">Diet Preference</label>
+          <select id="dietPref">
+            <option value="">Select</option>
+            <option value="Vegetarian">Vegetarian</option>
+            <option value="Regular">Regular</option>
+            <option value="Keto">Keto</option>
+            <option value="Vegan">Vegan</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="disease">Chronic Disease</label>
+          <select id="disease">
+            <option value="None">None</option>
+            <option value="Hypertension">Hypertension</option>
+            <option value="Diabetes">Diabetes</option>
+            <option value="Heart Disease">Heart Disease</option>
+            <option value="Obesity">Obesity</option>
+          </select>
+        </div>
+
+        <button type="button" onclick="getPrediction()" id="submit-btn">
+          Get Recommendation
+        </button>
+        <div class="status" id="status-text"></div>
+      </div>
+
+      <!-- RIGHT: Result panel -->
+      <div class="panel" id="result-box">
+        <h2>Result</h2>
+        <div id="result-content">
+          <!-- Filled dynamically -->
+          <span style="font-size:13px;color:#777;">No prediction yet. Fill the form and click the button.</span>
+        </div>
+        <div class="error-text" id="error-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PREDICT_URL = "/predict"; // Flask backend
+
+    async function getPrediction() {
+      const statusText = document.getElementById("status-text");
+      const errorText = document.getElementById("error-text");
+      const resultContent = document.getElementById("result-content");
+      const btn = document.getElementById("submit-btn");
+
+      errorText.textContent = "";
+      statusText.textContent = "Predicting...";
+      btn.disabled = true;
+
+      const payload = {
+  Age: parseFloat(document.getElementById("age").value),
+  Height_cm: parseFloat(document.getElementById("height").value),
+  Weight_kg: parseFloat(document.getElementById("weight").value),
+  Gender: document.getElementById("gender").value,
+  Dietary_Habits: document.getElementById("dietPref").value,
+  Chronic_Disease: document.getElementById("disease").value
+};
+
+
+      try {
+        const res = await fetch(PREDICT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        let data;
+        try {
+          data = await res.json();
+        } catch (e) {
+          throw new Error("Server did not return valid JSON");
+        }
+
+        if (!res.ok || data.error) {
+          const msg = data && data.error ? data.error : `Server error ${res.status}`;
+          errorText.textContent = msg;
+          resultContent.innerHTML = "<span class='result-item'><b>Error while predicting.</b></span>";
+        } else {
+          // Show all returned keys dynamically
+          let html = "";
+          Object.entries(data).forEach(([key, value]) => {
+            const displayVal = typeof value === "number"
+              ? value.toFixed(2)
+              : value;
+            html += `<div class="result-item"><span class="result-label">${key}:</span> ${displayVal}</div>`;
+          });
+          resultContent.innerHTML = html;
+        }
+
+      } catch (err) {
+        console.error(err);
+        errorText.textContent = "Something went wrong. Check backend console.";
+        resultContent.innerHTML = "<span class='result-item'><b>Prediction failed.</b></span>";
+      } finally {
+        statusText.textContent = "";
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
