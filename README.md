@@ -190,12 +190,7 @@ NEXT_PUBLIC_TURN_USERNAME=your name
 NEXT_PUBLIC_TURN_CREDENTIAL=your key
 ```
 
----
-## Contact
-For any queries or suggestions, feel free to reach out:
-- **Name**: Vedant Nikam
-- **Email**: [nikam.vedant05@gmail.com]
-- **GitHub**: [https://github.com/Vednik123](https://github.com/Vednik123)
+
 
 
 
